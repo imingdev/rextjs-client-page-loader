@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "app": {
+      "description": "The app load path",
+      "type": "string"
+    },
+    "id": {
+      "description": "Customize the document node ID",
+      "type": "string"
+    },
+    "context": {
+      "description": "Name of global water flood object",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
