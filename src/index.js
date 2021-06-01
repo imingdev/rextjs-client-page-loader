@@ -3,13 +3,12 @@ import { getOptions } from 'loader-utils';
 import { validate } from 'schema-utils';
 import schema from './options.json';
 
-const formatFilePath = (_path) => {
+const normalizePath = (_path) => {
   if (_path.includes(sep)) return _path.split(sep).join('/');
-
-  return _path;
+  return _path.replace(/\/\//g, '/');
 };
 
-export default function () {
+export default function Loader() {
   const { resourcePath } = this;
   const options = getOptions(this);
 
@@ -20,8 +19,8 @@ export default function () {
 
   const { app, id, context } = options;
 
-  const appPath = formatFilePath(app);
-  const componentPath = formatFilePath(resourcePath);
+  const appPath = normalizePath(app);
+  const componentPath = normalizePath(resourcePath);
 
   return `
     import React from 'react';
@@ -30,7 +29,7 @@ export default function () {
     import App from "${appPath}";
     import Component from "${componentPath}";
 
-    const state = window${context};
+    const state = ${context};
     const mainEl = document.getElementById("${id}");
     const AppComponent = <App Component={Component} pageProps={state}/>;
 
