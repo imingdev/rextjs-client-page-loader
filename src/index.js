@@ -25,13 +25,14 @@ export default function Loader() {
   return `
     import React from 'react';
     import ReactDom from 'react-dom';
+    import { hot } from 'react-hot-loader/root';
 
     import App from "${appPath}";
     import Component from "${componentPath}";
 
-    const state = ${context};
+    const state = window.${context};
     const mainEl = document.getElementById("${id}");
-    const AppComponent = <App Component={Component} pageProps={state}/>;
+    const AppComponent = <App Component={hot(Component)} pageProps={state}/>;
 
     ReactDom.hydrate(AppComponent, mainEl);
   `;
