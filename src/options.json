@@ -12,6 +12,10 @@
     "context": {
       "description": "Name of global water flood object",
       "type": "string"
+    },
+    "useHot": {
+      "description": "Name of global water flood object",
+      "type": "boolean"
     }
   },
   "additionalProperties": false

@@ -17,7 +17,7 @@ export default function Loader() {
     baseDataPath: 'options',
   });
 
-  const { app, id, context } = options;
+  const { app, id, context, useHot } = options;
 
   const appPath = normalizePath(app);
   const componentPath = normalizePath(resourcePath);
@@ -25,15 +25,14 @@ export default function Loader() {
   return `
     import React from 'react';
     import ReactDom from 'react-dom';
-    import { hot } from 'react-hot-loader/root';
+    ${useHot ? 'import { hot } from "react-hot-loader/root";' : ''}
 
-    import App from "${appPath}";
-    import Component from "${componentPath}";
-
-    const state = window.${context};
-    const mainEl = document.getElementById("${id}");
-    const AppComponent = <App Component={hot(Component)} pageProps={state}/>;
-
-    ReactDom.hydrate(AppComponent, mainEl);
+    import App from '${appPath}';
+    import Component from '${componentPath}';
+    
+    const pageProps = ${context};
+    const mainEl = document.getElementById('${id}');
+    
+    ReactDom.hydrate(React.createElement(App, { Component: ${useHot ? 'hot(Component)' : 'Component'}, pageProps }), mainEl);
   `;
 }
